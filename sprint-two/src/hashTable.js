@@ -39,13 +39,12 @@ HashTable.prototype.retrieve = function(k){
 };
 
 HashTable.prototype.remove = function(k){
-  //debugger;
 	var i = getIndexBelowMaxForKey(k, this._limit);
 	var slot = this._storage.get(i);
 	if (slot) {
 		for(var index = 0; index < slot.length; index++){
 			if(slot[index][0] === k){
-				slot[index].splice(index);
+				slot.splice(index);
         this._count--;
         this._checkSize();
 			}
@@ -56,16 +55,14 @@ HashTable.prototype.remove = function(k){
 HashTable.prototype._checkSize = function(){
 
   if (this._count > 6 && this._limit === 8){
-    //this._limit = Math.min(this._limit*2, 64);
-    this._limit = 16;
-    //console.log("make it bigger; new limit:", this._limit);
+    this._limit = Math.min(this._limit*2, 64);
+    //this._limit = 16;
     this._reHash();
 
   }
   else if (this._count <= 2 && this._limit > 8){
-    //this._limit = Math.max(this._limit/2, 8);
-    this._limit = 8;
-    console.log("make it smaller; new limit:", this._limit);
+    this._limit = Math.max(this._limit/2, 8);
+    //this._limit = 8;
     this._reHash();
   }
 
@@ -78,8 +75,11 @@ HashTable.prototype._reHash = function(){
     if (slot !== undefined){
       for (var i = 0; i < slot.length; i++){
         var newIndex = getIndexBelowMaxForKey(slot[i][0], limit);
-        console.log(newIndex, slot[i]);
-        newStorage.set(newIndex, slot[i]);
+        if (newStorage.get(newIndex) === undefined){
+          newStorage.set(newIndex, [slot[i]]);
+        } else {
+          newStorage.get(newIndex, slot[i]).push(slot[i]);
+        }
       }
     }
   });
