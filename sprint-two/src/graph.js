@@ -94,6 +94,7 @@ Graph.prototype.removeEdge = function(fromNode, toNode){
 };
 
 Graph.prototype._find = function(value){
+  /*
   for (var key in this.nodes){
     var test = this.nodes[key];
     if (test.value === value){
@@ -101,6 +102,8 @@ Graph.prototype._find = function(value){
     }
   }
   return undefined;
+  */
+  return this.nodes[value];
 };
 
 var makeNode = function(value){
