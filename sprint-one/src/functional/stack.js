@@ -3,7 +3,7 @@ var makeStack = function(){
  
   // Use an object with numeric keys to store values
   var storage = {};
-   var size = 0;
+  var size = 0;
 
   // Implement the methods below
   someInstance.push = function(value){
@@ -12,11 +12,18 @@ var makeStack = function(){
   };
 
   someInstance.pop = function(){
-    size && size--;
-    var result = storage[size];
+    // class
+    // size && size--;
+    // var result = storage[size];
     
-    delete storage[size];
+    // delete storage[size];
     
+    var result;
+    if (size > 0) {
+      size--;
+      result = storage[size];
+      delete storage[size];
+    }
     return result;
   };
 
@@ -26,5 +33,3 @@ var makeStack = function(){
 
   return someInstance;
 };
-
-// 
